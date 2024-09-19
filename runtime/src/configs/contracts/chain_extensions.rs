@@ -9,13 +9,8 @@ impl<T> Default for ChainExtensions<T> {
     }
 }
 
-impl<T: pallet_contracts::Config> ChainExtension<T>
-    for ChainExtensions<T>
-{
-    fn call<E: Ext<T = T>>(
-        &mut self,
-        env: Environment<E, InitState>,
-    ) -> Result<RetVal> {
+impl<T: pallet_contracts::Config> ChainExtension<T> for ChainExtensions<T> {
+    fn call<E: Ext<T = T>>(&mut self, _env: Environment<E, InitState>) -> Result<RetVal> {
         todo!()
     }
 }
