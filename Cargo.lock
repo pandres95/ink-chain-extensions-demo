@@ -5776,6 +5776,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "my-chain-extensions"
+version = "0.1.0"
+
+[[package]]
 name = "nalgebra"
 version = "0.32.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6887,6 +6891,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-nfts"
+version = "31.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "055e9b6e3eb24da0a1bfc66682aac1510714168ce5c4cc396bbcbeb564593d98"
+dependencies = [
+ "enumflags2",
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+]
+
+[[package]]
 name = "pallet-nis"
 version = "37.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7551,12 +7573,14 @@ dependencies = [
  "frame-try-runtime",
  "hex-literal",
  "log",
+ "my-chain-extensions",
  "pallet-aura",
  "pallet-authorship",
  "pallet-balances",
  "pallet-collator-selection",
  "pallet-contracts",
  "pallet-message-queue",
+ "pallet-nfts",
  "pallet-session",
  "pallet-sudo",
  "pallet-timestamp",

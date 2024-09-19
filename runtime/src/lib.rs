@@ -301,6 +301,9 @@ construct_runtime!(
 
         // Contracts
         Contracts: pallet_contracts = 40,
+
+        // Nfts
+        Nfts: pallet_nfts = 50,
     }
 );
 
