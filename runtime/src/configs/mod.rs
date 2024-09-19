@@ -242,6 +242,9 @@ impl cumulus_pallet_xcmp_queue::Config for Runtime {
     type ControllerOriginConverter = XcmOriginToTransactDispatchOrigin;
     type WeightInfo = (); // Configure based on benchmarking results.
     type PriceForSiblingDelivery = NoPriceForMessageDelivery<ParaId>;
+
+    type MaxActiveOutboundChannels = ConstU32<100>;
+    type MaxPageSize = ConstU32<{ 1024 * 1024 }>;
 }
 
 parameter_types! {

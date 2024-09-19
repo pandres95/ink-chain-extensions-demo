@@ -23,6 +23,8 @@
 //
 // For more information, please refer to <http://unlicense.org>
 
+mod chain_extensions;
+
 use crate::{
     deposit, Balance, Balances, Perbill, Runtime, RuntimeCall, RuntimeEvent, RuntimeHoldReason,
     Timestamp,
@@ -94,7 +96,7 @@ impl pallet_contracts::Config for Runtime {
     type CallStack = [pallet_contracts::Frame<Self>; 23];
     type WeightPrice = pallet_transaction_payment::Pallet<Self>;
     type WeightInfo = pallet_contracts::weights::SubstrateWeight<Self>;
-    type ChainExtension = ();
+    type ChainExtension = chain_extensions::ChainExtensions<Self>;
     type Schedule = Schedule;
     type AddressGenerator = pallet_contracts::DefaultAddressGenerator;
     // This node is geared towards development and testing of contracts.
@@ -109,6 +111,7 @@ impl pallet_contracts::Config for Runtime {
     type DefaultDepositLimit = DefaultDepositLimit;
     type MaxStorageKeyLen = ConstU32<128>;
     type MaxDebugBufferLen = ConstU32<{ 2 * 1024 * 1024 }>;
+    type MaxTransientStorageSize = ConstU32<{ 10 * 1024 * 1024 }>;
     type UnsafeUnstableInterface = ConstBool<true>;
     type CodeHashLockupDepositPercent = CodeHashLockupDepositPercent;
     type MaxDelegateDependencies = MaxDelegateDependencies;
