@@ -40,7 +40,7 @@ impl<T: pallet_contracts::Config + pallet_nfts::Config> ChainExtension<T> for Ch
                     Default::default(),
                     true,
                 )?;
-                env.write(&collection_id.encode(), false, None)
+                env.write(&item_id.encode(), false, None)
             }
         }
 
