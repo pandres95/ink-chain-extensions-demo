@@ -18,6 +18,7 @@ type ItemIdOf<T> = <T as pallet_nfts::Config>::ItemId;
 
 impl<T: pallet_contracts::Config + pallet_nfts::Config> ChainExtension<T> for ChainExtensions<T> {
     fn call<E: Ext<T = T>>(&mut self, env: Environment<E, InitState>) -> Result<RetVal> {
+        let ext_id = env.ext_id();
         let mut env = env.buf_in_buf_out();
         let func_id = env.func_id();
         let origin = RuntimeOrigin::signed(env.ext().caller().account_id()?.clone());

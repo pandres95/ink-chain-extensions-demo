@@ -9,7 +9,7 @@ license = "Unlicense"
 repository = "https://github.com/r0gue-io/base-parachain"
 
 [workspace]
-members = ["node", "runtime", "chain-extensions"]
+members = ["node", "runtime", "chain-extensions", "contract"]
 resolver = "2"
 
 [workspace.dependencies]
