@@ -18,46 +18,49 @@ mod contract {
     /// Defines the storage of your contract.
     /// Add new fields to the below struct in order
     /// to add new static storage fields to your contract.
+    #[derive(Default)]
     #[ink(storage)]
     pub struct Contract {
         /// Stores a single `bool` value on the storage.
-        collection_id: CollectionId,
+        collection_id: Option<CollectionId>,
         item_id: ItemId,
     }
 
     impl Contract {
-        /// Constructor that initializes the `bool` value to the given `init_value`.
         #[ink(constructor)]
         pub fn new() -> Self {
-            Self {
-                collection_id: 0,
-                item_id: 0,
-            }
+            Default::default()
         }
 
         #[ink(message)]
         pub fn initialize_collection(&mut self) -> Result<(), u32> {
+            if let Some(_) = self.collection_id {
+                return Ok(());
+            }
+
             let collection_id = self
                 .env()
                 .extension()
                 .create_collection()
                 .map_err(|_| 1u32)?;
-            self.collection_id = collection_id;
+            self.collection_id = Some(collection_id);
             Ok(())
         }
 
         #[ink(message)]
         pub fn airdrop_nft(&mut self) -> Result<(), u32> {
             let who = self.env().caller();
+            let collection_id = self.collection_id.ok_or(1u32)?;
             self.item_id = self.item_id + 1;
+
             let _: ItemId = self
                 .env()
                 .extension()
-                .create_item(self.collection_id, self.item_id, who)
+                .create_item(collection_id, self.item_id, who)
                 .map_err(|_| 2u32)?;
 
             self.env().emit_event(NftAirdropped {
-                collection_id: self.collection_id,
+                collection_id,
                 item_id: self.item_id,
                 who,
             });
