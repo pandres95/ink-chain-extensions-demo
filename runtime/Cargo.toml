@@ -102,6 +102,7 @@ std = [
     "frame-system/std",
     "frame-try-runtime/std",
     "log/std",
+    "my-chain-extensions/std",
     "pallet-aura/std",
     "pallet-authorship/std",
     "pallet-balances/std",

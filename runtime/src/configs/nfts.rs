@@ -4,10 +4,7 @@ use pallet_nfts::PalletFeatures;
 use sp_core::ConstU32;
 use sp_runtime::traits::Verify;
 
-use crate::{
-    contracts_config::deposit, AccountId, Balance, Balances, BlockNumber, Runtime, RuntimeEvent,
-    Signature, DAYS, UNIT,
-};
+use crate::{AccountId, Balance, Balances, BlockNumber, Runtime, RuntimeEvent, Signature, DAYS};
 
 parameter_types! {
     pub NftsPalletFeatures: PalletFeatures = PalletFeatures::all_enabled();
@@ -48,5 +45,5 @@ impl pallet_nfts::Config for Runtime {
 
     type OffchainSignature = Signature;
     type OffchainPublic = <Signature as Verify>::Signer;
-    type WeightInfo = pallet_nfts::weights::WeightInfo<Runtime>;
+    type WeightInfo = pallet_nfts::weights::SubstrateWeight<Self>;
 }

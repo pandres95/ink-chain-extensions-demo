@@ -1,8 +1,9 @@
 use codec::Encode;
 use core::marker::PhantomData;
-use frame_support::traits::tokens::nonfungibles_v2::{Create, Inspect, Mutate};
+use frame_support::traits::tokens::nonfungibles_v2::{Create, Mutate};
 use my_chain_extensions::NftExtensions;
 use pallet_contracts::chain_extension::*;
+use sp_runtime::DispatchError;
 
 pub struct ChainExtensions<T>(PhantomData<T>);
 
@@ -18,30 +19,43 @@ type ItemIdOf<T> = <T as pallet_nfts::Config>::ItemId;
 
 impl<T: pallet_contracts::Config + pallet_nfts::Config> ChainExtension<T> for ChainExtensions<T> {
     fn call<E: Ext<T = T>>(&mut self, env: Environment<E, InitState>) -> Result<RetVal> {
-        let ext_id = env.ext_id();
         let mut env = env.buf_in_buf_out();
-        let func_id = env.func_id();
-        let origin = RuntimeOrigin::signed(env.ext().caller().account_id()?.clone());
+        let origin = env.ext().caller().account_id()?.clone();
 
-        match env.func_id().into() {
+        match env
+            .func_id()
+            .try_into()
+            .map_err(|_| DispatchError::Other("Cannot convert func_id"))?
+        {
             NftExtensions::CreateCollection => {
                 let collection_id = pallet_nfts::Pallet::<T>::create_collection(
-                    origin,
-                    origin,
-                    Default::default(),
+                    &origin,
+                    &origin,
+                    &pallet_nfts::CollectionConfig {
+                        settings: Default::default(),
+                        max_supply: None,
+                        mint_settings: pallet_nfts::MintSettings {
+                            mint_type: pallet_nfts::MintType::<CollectionIdOf<T>>::Issuer,
+                            ..Default::default()
+                        },
+                    },
                 )?;
-                env.write(&collection_id.encode(), false, None)
+                env.write(&collection_id.encode(), false, None)?;
             }
             NftExtensions::CreateItem => {
-                let (collection_id, item_id, who) = env.read_as()?;
+                let (collection_id, item_id, who): (
+                    CollectionIdOf<T>,
+                    ItemIdOf<T>,
+                    AccountIdOf<T>,
+                ) = env.read_as()?;
                 let item_id = pallet_nfts::Pallet::<T>::mint_into(
-                    collection_id,
-                    item_id,
-                    who,
-                    Default::default(),
+                    &collection_id,
+                    &item_id,
+                    &who,
+                    &Default::default(),
                     true,
                 )?;
-                env.write(&item_id.encode(), false, None)
+                env.write(&item_id.encode(), false, None)?;
             }
         }
 

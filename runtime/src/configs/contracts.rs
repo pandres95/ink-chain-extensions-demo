@@ -111,7 +111,7 @@ impl pallet_contracts::Config for Runtime {
     type DefaultDepositLimit = DefaultDepositLimit;
     type MaxStorageKeyLen = ConstU32<128>;
     type MaxDebugBufferLen = ConstU32<{ 2 * 1024 * 1024 }>;
-    type MaxTransientStorageSize = ConstU32<{ 10 * 1024 * 1024 }>;
+    type MaxTransientStorageSize = ConstU32<{ 1 * 1024 * 1024 }>;
     type UnsafeUnstableInterface = ConstBool<true>;
     type CodeHashLockupDepositPercent = CodeHashLockupDepositPercent;
     type MaxDelegateDependencies = MaxDelegateDependencies;
