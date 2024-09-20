@@ -6804,6 +6804,12 @@ dependencies = [
 [[package]]
 name = "my-chain-extensions"
 version = "0.1.0"
+dependencies = [
+ "log",
+ "pallet-contracts 37.0.0",
+ "pallet-nfts",
+ "sp-runtime 39.0.0",
+]
 
 [[package]]
 name = "nalgebra"

@@ -24,13 +24,17 @@ cumulus_based = true
 onboard_as_parachain = true
 
 [[parachains.collators]]
-args = ["--force-authoring --log=xcm=trace,parachain=trace"]
+args = [
+  "--force-authoring --log=xcm=trace,parachain=trace,chain_extensions=trace",
+]
 command = "./target/release/parachain-template-node"
 name = "collators-0"
 ws_port = 20000
 
 [[parachains.collators]]
-args = ["--force-authoring --log=xcm=trace,parachain=trace"]
+args = [
+  "--force-authoring --log=xcm=trace,parachain=trace,chain_extensions=trace",
+]
 command = "./target/release/parachain-template-node"
 name = "collators-1"
 ws_port = 21000

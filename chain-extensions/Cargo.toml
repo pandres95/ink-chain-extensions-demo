@@ -9,6 +9,13 @@ repository.workspace = true
 edition.workspace = true
 publish = false
 
+[dependencies]
+log.workspace = true
+
+pallet-contracts.workspace = true
+pallet-nfts.workspace = true
+sp-runtime.workspace = true
+
 [features]
 default = ["std"]
-std = []
+std = ["pallet-contracts/std", "pallet-nfts/std", "sp-runtime/std"]
