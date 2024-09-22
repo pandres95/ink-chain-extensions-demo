@@ -53,8 +53,7 @@ mod contract {
             let collection_id = self.collection_id.ok_or(1u32)?;
             self.item_id = self.item_id + 1;
 
-            let _: ItemId = self
-                .env()
+            self.env()
                 .extension()
                 .create_item(collection_id, self.item_id, who)
                 .map_err(|_| 2u32)?;

@@ -1,7 +1,6 @@
 use codec::Encode;
 use core::marker::PhantomData;
 use frame_support::traits::tokens::nonfungibles_v2::{Create, Mutate};
-use log::trace;
 use my_chain_extensions::NftExtensions;
 use pallet_contracts::chain_extension::*;
 
@@ -38,15 +37,13 @@ impl<T: pallet_contracts::Config + pallet_nfts::Config> ChainExtension<T> for Ch
                 item_id,
                 who,
             } => {
-                trace!("Minting item ({collection_id:?}, {item_id:?}) for {who:?}");
-                let item_id = pallet_nfts::Pallet::<T>::mint_into(
+                pallet_nfts::Pallet::<T>::mint_into(
                     &collection_id,
                     &item_id,
                     &who,
                     &Default::default(),
                     true,
                 )?;
-                env.write(&item_id.encode(), false, None)?;
             }
         }
 

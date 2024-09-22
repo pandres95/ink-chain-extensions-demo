@@ -16,7 +16,7 @@ pub trait NftChainExtension {
         collection_id: CollectionId,
         item_id: ItemId,
         who: AccountId,
-    ) -> Result<ItemId, NftError>;
+    ) -> Result<(), NftError>;
 }
 
 #[ink::scale_derive(Encode, Decode, TypeInfo)]
